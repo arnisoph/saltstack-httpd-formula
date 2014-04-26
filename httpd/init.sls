@@ -21,8 +21,6 @@ httpd:
 {% endfor %}
 {% for k, v in salt['pillar.get']('httpd:vhosts').items() %}
       - file: vhost_{{ k }}
-{% endfor %}
-{% for k, v in salt['pillar.get']('httpd:vhosts').items() %}
       - cmd: manage_site_{{ k }}
 {% endfor %}
 
