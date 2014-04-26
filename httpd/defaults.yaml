@@ -1,0 +1,7 @@
+{% load_yaml as rawmap %}
+Debian:
+  pkgs:
+    - apache2
+  service:
+    name: apache2
+{% endload %}
