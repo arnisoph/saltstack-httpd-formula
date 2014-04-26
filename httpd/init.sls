@@ -19,6 +19,13 @@ httpd:
       - cmd: manage_mod_{{ k }}
   {% endif %}
 {% endfor %}
+{% for k, v in salt['pillar.get']('httpd:vhosts').items() %}
+      - file: vhost_{{ k }}
+{% endfor %}
+{% for k, v in salt['pillar.get']('httpd:vhosts').items() %}
+      - cmd: manage_site_{{ k }}
+{% endfor %}
+
 
 
 {% for k, v in datamap.modules.items() %}
@@ -43,9 +50,43 @@ manage_mod_{{ k }}:
     - name: {{ datamap.a2dismod.path}} {{ v.name|default(k) }}
     {% endif %}
     {% if v.enable|default(True) %}
-    - unless: test -e /etc/apache2/mods-enabled/{{ v.name|default(k) }}.load
+    - unless: test -L /etc/apache2/mods-enabled/{{ v.name|default(k) }}.load
     {% else %}
-    - onlyif: test -e /etc/apache2/mods-enabled/{{ v.name|default(k) }}.load
+    - onlyif: test -L /etc/apache2/mods-enabled/{{ v.name|default(k) }}.load
     {% endif %}
   {% endif %}
+{% endfor %}
+
+{% for k, v in salt['pillar.get']('httpd:vhosts').items() %}
+  {% if v.ensure is not defined or v.ensure in ['managed'] %}
+    {% set f_fun = 'managed' %}
+  {% elif v.ensure in ['absent'] %}
+    {% set f_fun = 'absent' %}
+  {% endif %}
+
+  {% set v_name = v.name|default(k) %}
+
+manage_site_{{ k }}:
+  cmd:
+    - run
+    {% if f_fun in ['managed'] %}
+    - name: {{ datamap.a2ensite.path}} {{ v_name }}
+    {% else %}
+    - name: {{ datamap.a2dissite.path}} {{ v_name }}
+    {% endif %}
+    {% if f_fun in ['managed'] %}
+    - unless: test -L /etc/apache2/sites-enabled/{{ v.linkname|default(v_name) }}
+    {% else %}
+    - onlyif: test -L /etc/apache2/sites-enabled/{{ v.linkname|default(v_name) }}
+    {% endif %}
+
+vhost_{{ k }}:
+  file:
+    - {{ f_fun }}
+    - name: {{ v.path|default(datamap.vhosts.dir ~ '/' ~ datamap.vhosts.name_prefix|default('') ~ v_name ~ datamap.vhosts.name_suffix|default('')) }}
+    - user: root
+    - group: root
+    - mode: 640
+    - contents_pillar: httpd:vhosts:{{ v_name }}:content
+
 {% endfor %}

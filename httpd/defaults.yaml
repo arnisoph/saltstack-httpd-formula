@@ -4,6 +4,8 @@ Debian:
     - apache2
   service:
     name: apache2
+  vhosts:
+    dir: /etc/apache2/sites-available
   modules:
     wsgi:
       pkgs:
@@ -325,6 +327,10 @@ Debian:
     path: /usr/sbin/a2enmod
   a2dismod:
     path: /usr/sbin/a2dismod
+  a2ensite:
+    path: /usr/sbin/a2ensite
+  a2dissite:
+    path: /usr/sbin/a2dissite
 RedHat:
   pkgs:
     - httpd
