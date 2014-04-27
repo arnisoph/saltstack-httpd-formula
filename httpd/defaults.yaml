@@ -6,323 +6,6 @@ Debian:
     name: apache2
   vhosts:
     dir: /etc/apache2/sites-available
-  modules:
-    wsgi:
-      pkgs:
-        - libapache2-mod-wsgi
-    passenger:
-      pkgs:
-        - libapache2-mod-passenger
-    suexec:
-      pkgs: []
-    expires:
-      pkgs: []
-    headers:
-      pkgs: []
-    fcgid:
-      pkgs:
-        - libapache2-mod-fcgid
-    rewrite:
-      pkgs: []
-    alias:
-      pkgs: []
-    deflate:
-      pkgs: []
-    ssl:
-      pkgs: []
-    proxy:
-      pkgs: []
-    proxy_http:
-      pkgs: []
-    userdir:
-      pkgs: []
-    status:
-      pkgs: []
-    autoindex:
-      pkgs: []
-    php5:
-      pkgs:
-        - libapache2-mod-php5
-    apparmor:
-      pkgs:
-        - libapache2-mod-apparmor
-    apreq2:
-      pkgs:
-        - libapache2-mod-apreq2
-    auth_cas:
-      name: auth-cas
-      pkgs:
-        - libapache2-mod-auth-cas
-    auth_kerb:
-      name: auth-kerb
-      pkgs:
-        - libapache2-mod-auth-kerb
-    auth_memcookie:
-      name: auth-memcookie
-      pkgs:
-        - libapache2-mod-auth-memcookie
-    auth_mysql:
-      name: auth-mysql
-      pkgs:
-        - libapache2-mod-auth-mysql
-    authn_sasl:
-      name: authn-sasl
-      pkgs:
-        - libapache2-mod-authn-sasl
-    auth_ntlm_winbind:
-      name: auth-ntlm-winbind
-      pkgs:
-        - libapache2-mod-auth-ntlm-winbind
-    authn_webid:
-      name: authn-webid
-      pkgs:
-        - libapache2-mod-authn-webid
-    authn_yubikey:
-      name: authn-yubikey
-      pkgs:
-        - libapache2-mod-authn-yubikey
-    authnz_external:
-      name: authnz-external
-      pkgs:
-        - libapache2-mod-authnz-external
-    auth_openid:
-      name: auth-openid
-      pkgs:
-        - libapache2-mod-auth-openid
-    auth_pam:
-      name: auth-pam
-      pkgs:
-        - libapache2-mod-auth-pam
-    auth_pgsql:
-      name: auth-pgsql
-      pkgs:
-        - libapache2-mod-auth-pgsql
-    auth_plain:
-      name: auth-plain
-      pkgs:
-        - libapache2-mod-auth-plain
-    auth_pubtkt:
-      name: auth-pubtkt
-      pkgs:
-        - libapache2-mod-auth-pubtkt
-    auth_radius:
-      name: auth-radius
-      pkgs:
-        - libapache2-mod-auth-radius
-    auth_sys_group:
-      name: auth-sys-group
-      pkgs:
-        - libapache2-mod-auth-sys-group
-    auth_tkt:
-      name: auth-tkt
-      pkgs:
-        - libapache2-mod-auth-tkt
-    authz_unixgroup:
-      name: authz-unixgroup
-      pkgs:
-        - libapache2-mod-authz-unixgroup
-    bw:
-      pkgs:
-        - libapache2-mod-bw
-    dacs:
-      pkgs:
-        - libapache2-mod-dacs
-    defensible:
-      pkgs:
-        - libapache2-mod-defensible
-    dnssd:
-      pkgs:
-        - libapache2-mod-dnssd
-    encoding:
-      pkgs:
-        - libapache2-mod-encoding
-    evasive:
-      pkgs:
-        - libapache2-mod-evasive
-    fastcgi:
-      pkgs:
-        - libapache2-mod-fastcgi
-    fcgid:
-      pkgs:
-        - libapache2-mod-fcgid
-    geoip:
-      pkgs:
-        - libapache2-mod-geoip
-    gnutls:
-      pkgs:
-        - libapache2-mod-gnutls
-    jk:
-      pkgs:
-        - libapache2-mod-jk
-    layout:
-      pkgs:
-        - libapache2-mod-layout
-    ldap_userdir:
-      name: ldap-userdir
-      pkgs:
-        - libapache2-mod-ldap-userdir
-    ldap_userdir_dbg:
-      name: ldap-userdir-dbg
-      pkgs:
-        - libapache2-mod-ldap-userdir-dbg
-    lisp:
-      pkgs:
-        - libapache2-mod-lisp
-    log_sql_dbi:
-      name: log-sql-dbi
-      pkgs:
-        - libapache2-mod-log-sql-dbi
-    log_sql_mysql:
-      name: log-sql-mysql
-      pkgs:
-        - libapache2-mod-log-sql-mysql
-    log_sql_ssl:
-      name: log-sql-ssl
-      pkgs:
-        - libapache2-mod-log-sql-ssl
-    log_sql:
-      name: log-sql
-      pkgs:
-        - libapache2-mod-log-sql
-    macro:
-      pkgs:
-        - libapache2-mod-macro
-    mime_xattr:
-      name: mime-xattr
-      pkgs:
-        - libapache2-mod-mime-xattr
-    mono:
-      pkgs:
-        - libapache2-mod-mono
-    musicindex:
-      pkgs:
-        - libapache2-mod-musicindex
-    neko:
-      pkgs:
-        - libapache2-mod-neko
-    nss:
-      pkgs:
-        - libapache2-mod-nss
-    ocamlnet:
-      pkgs:
-        - libapache2-mod-ocamlnet
-    parser3:
-      pkgs:
-        - libapache2-mod-parser3
-    perl2_dev:
-      name: perl2-dev
-      pkgs:
-        - libapache2-mod-perl2-dev
-    perl2_doc:
-      name: perl2-doc
-      pkgs:
-        - libapache2-mod-perl2-doc
-    perl2:
-      pkgs:
-        - libapache2-mod-perl2
-    php5filter:
-      pkgs:
-        - libapache2-mod-php5filter
-    proxy_html:
-      name: proxy-html
-      pkgs:
-        - libapache2-mod-proxy-html
-    python_doc:
-      name: python-doc
-      pkgs:
-        - libapache2-mod-python-doc
-    python:
-      pkgs:
-        - libapache2-mod-python
-    qos:
-      pkgs:
-        - libapache2-mod-qos
-    random:
-      pkgs:
-        - libapache2-mod-random
-    removeip:
-      pkgs:
-        - libapache2-mod-removeip
-    rivet_doc:
-      name: rivet-doc
-      pkgs:
-        - libapache2-mod-rivet-doc
-    rivet:
-      pkgs:
-        - libapache2-mod-rivet
-    rpaf:
-      pkgs:
-        - libapache2-mod-rpaf
-    ruby:
-      pkgs:
-        - libapache2-mod-ruby
-    ruid2:
-      pkgs:
-        - libapache2-mod-ruid2
-    ruwsgi_dbg:
-      name: ruwsgi-dbg
-      pkgs:
-        - libapache2-mod-ruwsgi-dbg
-    ruwsgi:
-      pkgs:
-        - libapache2-mod-ruwsgi
-    scgi:
-      pkgs:
-        - libapache2-mod-scgi
-    shib2:
-      pkgs:
-        - libapache2-mod-shib2
-    spamhaus:
-      pkgs:
-        - libapache2-mod-spamhaus
-    speedycgi:
-      pkgs:
-        - libapache2-mod-speedycgi
-    suphp:
-      pkgs:
-        - libapache2-mod-suphp
-    upload_progress:
-      name: upload-progress
-      pkgs:
-        - libapache2-mod-upload-progress
-    uwsgi_dbg:
-      name: uwsgi-dbg
-      pkgs:
-        - libapache2-mod-uwsgi-dbg
-    uwsgi:
-      pkgs:
-        - libapache2-mod-uwsgi
-    vhost_hash_alias:
-      name: vhost-hash-alias
-      pkgs:
-        - libapache2-mod-vhost-hash-alias
-    vhost_ldap:
-      name: vhost-ldap
-      pkgs:
-        - libapache2-mod-vhost-ldap
-    wsgi_py3:
-      name: wsgi-py3
-      pkgs:
-        - libapache2-mod-wsgi-py3
-    xsendfile:
-      pkgs:
-        - libapache2-mod-xsendfile
-    libapache_mod_jk_doc:
-      name: libapache-mod-jk-doc
-      pkgs:
-        - libapache2-mod-libapache-mod-jk-doc
-    libapr_memcache0:
-      name: libapr-memcache0
-      pkgs:
-        - libapache2-mod-libapr-memcache0
-    libapr_memcache_dev:
-      name: libapr-memcache-dev
-      pkgs:
-        - libapache2-mod-libapr-memcache-dev
-    libocamlnet_ocaml_dev:
-      name: libocamlnet-ocaml-dev
-      pkgs:
-        - libapache2-mod-libocamlnet-ocaml-dev
   a2enmod:
     path: /usr/sbin/a2enmod
   a2dismod:
@@ -331,6 +14,325 @@ Debian:
     path: /usr/sbin/a2ensite
   a2dissite:
     path: /usr/sbin/a2dissite
+  mods:
+    dir: /etc/apache2/mods-available
+    modules:
+      wsgi:
+        pkgs:
+          - libapache2-mod-wsgi
+      passenger:
+        pkgs:
+          - libapache2-mod-passenger
+      suexec:
+        pkgs: []
+      expires:
+        pkgs: []
+      headers:
+        pkgs: []
+      fcgid:
+        pkgs:
+          - libapache2-mod-fcgid
+      rewrite:
+        pkgs: []
+      alias:
+        pkgs: []
+      deflate:
+        pkgs: []
+      ssl:
+        pkgs: []
+      proxy:
+        pkgs: []
+      proxy_http:
+        pkgs: []
+      userdir:
+        pkgs: []
+      status:
+        pkgs: []
+      autoindex:
+        pkgs: []
+      php5:
+        pkgs:
+          - libapache2-mod-php5
+      apparmor:
+        pkgs:
+          - libapache2-mod-apparmor
+      apreq2:
+        pkgs:
+          - libapache2-mod-apreq2
+      auth_cas:
+        name: auth-cas
+        pkgs:
+          - libapache2-mod-auth-cas
+      auth_kerb:
+        name: auth-kerb
+        pkgs:
+          - libapache2-mod-auth-kerb
+      auth_memcookie:
+        name: auth-memcookie
+        pkgs:
+          - libapache2-mod-auth-memcookie
+      auth_mysql:
+        name: auth-mysql
+        pkgs:
+          - libapache2-mod-auth-mysql
+      authn_sasl:
+        name: authn-sasl
+        pkgs:
+          - libapache2-mod-authn-sasl
+      auth_ntlm_winbind:
+        name: auth-ntlm-winbind
+        pkgs:
+          - libapache2-mod-auth-ntlm-winbind
+      authn_webid:
+        name: authn-webid
+        pkgs:
+          - libapache2-mod-authn-webid
+      authn_yubikey:
+        name: authn-yubikey
+        pkgs:
+          - libapache2-mod-authn-yubikey
+      authnz_external:
+        name: authnz-external
+        pkgs:
+          - libapache2-mod-authnz-external
+      auth_openid:
+        name: auth-openid
+        pkgs:
+          - libapache2-mod-auth-openid
+      auth_pam:
+        name: auth-pam
+        pkgs:
+          - libapache2-mod-auth-pam
+      auth_pgsql:
+        name: auth-pgsql
+        pkgs:
+          - libapache2-mod-auth-pgsql
+      auth_plain:
+        name: auth-plain
+        pkgs:
+          - libapache2-mod-auth-plain
+      auth_pubtkt:
+        name: auth-pubtkt
+        pkgs:
+          - libapache2-mod-auth-pubtkt
+      auth_radius:
+        name: auth-radius
+        pkgs:
+          - libapache2-mod-auth-radius
+      auth_sys_group:
+        name: auth-sys-group
+        pkgs:
+          - libapache2-mod-auth-sys-group
+      auth_tkt:
+        name: auth-tkt
+        pkgs:
+          - libapache2-mod-auth-tkt
+      authz_unixgroup:
+        name: authz-unixgroup
+        pkgs:
+          - libapache2-mod-authz-unixgroup
+      bw:
+        pkgs:
+          - libapache2-mod-bw
+      dacs:
+        pkgs:
+          - libapache2-mod-dacs
+      defensible:
+        pkgs:
+          - libapache2-mod-defensible
+      dnssd:
+        pkgs:
+          - libapache2-mod-dnssd
+      encoding:
+        pkgs:
+          - libapache2-mod-encoding
+      evasive:
+        pkgs:
+          - libapache2-mod-evasive
+      fastcgi:
+        pkgs:
+          - libapache2-mod-fastcgi
+      fcgid:
+        pkgs:
+          - libapache2-mod-fcgid
+      geoip:
+        pkgs:
+          - libapache2-mod-geoip
+      gnutls:
+        pkgs:
+          - libapache2-mod-gnutls
+      jk:
+        pkgs:
+          - libapache2-mod-jk
+      layout:
+        pkgs:
+          - libapache2-mod-layout
+      ldap_userdir:
+        name: ldap-userdir
+        pkgs:
+          - libapache2-mod-ldap-userdir
+      ldap_userdir_dbg:
+        name: ldap-userdir-dbg
+        pkgs:
+          - libapache2-mod-ldap-userdir-dbg
+      lisp:
+        pkgs:
+          - libapache2-mod-lisp
+      log_sql_dbi:
+        name: log-sql-dbi
+        pkgs:
+          - libapache2-mod-log-sql-dbi
+      log_sql_mysql:
+        name: log-sql-mysql
+        pkgs:
+          - libapache2-mod-log-sql-mysql
+      log_sql_ssl:
+        name: log-sql-ssl
+        pkgs:
+          - libapache2-mod-log-sql-ssl
+      log_sql:
+        name: log-sql
+        pkgs:
+          - libapache2-mod-log-sql
+      macro:
+        pkgs:
+          - libapache2-mod-macro
+      mime_xattr:
+        name: mime-xattr
+        pkgs:
+          - libapache2-mod-mime-xattr
+      mono:
+        pkgs:
+          - libapache2-mod-mono
+      musicindex:
+        pkgs:
+          - libapache2-mod-musicindex
+      neko:
+        pkgs:
+          - libapache2-mod-neko
+      nss:
+        pkgs:
+          - libapache2-mod-nss
+      ocamlnet:
+        pkgs:
+          - libapache2-mod-ocamlnet
+      parser3:
+        pkgs:
+          - libapache2-mod-parser3
+      perl2_dev:
+        name: perl2-dev
+        pkgs:
+          - libapache2-mod-perl2-dev
+      perl2_doc:
+        name: perl2-doc
+        pkgs:
+          - libapache2-mod-perl2-doc
+      perl2:
+        pkgs:
+          - libapache2-mod-perl2
+      php5filter:
+        pkgs:
+          - libapache2-mod-php5filter
+      proxy_html:
+        name: proxy-html
+        pkgs:
+          - libapache2-mod-proxy-html
+      python_doc:
+        name: python-doc
+        pkgs:
+          - libapache2-mod-python-doc
+      python:
+        pkgs:
+          - libapache2-mod-python
+      qos:
+        pkgs:
+          - libapache2-mod-qos
+      random:
+        pkgs:
+          - libapache2-mod-random
+      removeip:
+        pkgs:
+          - libapache2-mod-removeip
+      rivet_doc:
+        name: rivet-doc
+        pkgs:
+          - libapache2-mod-rivet-doc
+      rivet:
+        pkgs:
+          - libapache2-mod-rivet
+      rpaf:
+        pkgs:
+          - libapache2-mod-rpaf
+      ruby:
+        pkgs:
+          - libapache2-mod-ruby
+      ruid2:
+        pkgs:
+          - libapache2-mod-ruid2
+      ruwsgi_dbg:
+        name: ruwsgi-dbg
+        pkgs:
+          - libapache2-mod-ruwsgi-dbg
+      ruwsgi:
+        pkgs:
+          - libapache2-mod-ruwsgi
+      scgi:
+        pkgs:
+          - libapache2-mod-scgi
+      shib2:
+        pkgs:
+          - libapache2-mod-shib2
+      spamhaus:
+        pkgs:
+          - libapache2-mod-spamhaus
+      speedycgi:
+        pkgs:
+          - libapache2-mod-speedycgi
+      suphp:
+        pkgs:
+          - libapache2-mod-suphp
+      upload_progress:
+        name: upload-progress
+        pkgs:
+          - libapache2-mod-upload-progress
+      uwsgi_dbg:
+        name: uwsgi-dbg
+        pkgs:
+          - libapache2-mod-uwsgi-dbg
+      uwsgi:
+        pkgs:
+          - libapache2-mod-uwsgi
+      vhost_hash_alias:
+        name: vhost-hash-alias
+        pkgs:
+          - libapache2-mod-vhost-hash-alias
+      vhost_ldap:
+        name: vhost-ldap
+        pkgs:
+          - libapache2-mod-vhost-ldap
+      wsgi_py3:
+        name: wsgi-py3
+        pkgs:
+          - libapache2-mod-wsgi-py3
+      xsendfile:
+        pkgs:
+          - libapache2-mod-xsendfile
+      libapache_mod_jk_doc:
+        name: libapache-mod-jk-doc
+        pkgs:
+          - libapache2-mod-libapache-mod-jk-doc
+      libapr_memcache0:
+        name: libapr-memcache0
+        pkgs:
+          - libapache2-mod-libapr-memcache0
+      libapr_memcache_dev:
+        name: libapr-memcache-dev
+        pkgs:
+          - libapache2-mod-libapr-memcache-dev
+      libocamlnet_ocaml_dev:
+        name: libocamlnet-ocaml-dev
+        pkgs:
+          - libapache2-mod-libocamlnet-ocaml-dev
 RedHat:
   pkgs:
     - httpd

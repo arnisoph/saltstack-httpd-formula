@@ -14,11 +14,6 @@ httpd:
     - enable: {{ datamap.service.enable|default(True) }}
     - watch:
       - pkg: httpd #TODO remove
-{% for k, v in datamap.modules.items() %}
-  {% if v.manage|default(False) %}
-      - cmd: manage_mod_{{ k }}
-  {% endif %}
-{% endfor %}
 {% for k, v in salt['pillar.get']('httpd:vhosts').items() %}
       - file: vhost_{{ k }}
       - cmd: manage_site_{{ k }}
@@ -26,7 +21,7 @@ httpd:
 
 
 
-{% for k, v in datamap.modules.items() %}
+{% for k, v in datamap.mods.modules.items() %}
   {% if v.manage|default(False) %}
 
     {% if v.pkgs|length > 0 %}
@@ -54,6 +49,25 @@ manage_mod_{{ k }}:
     {% else %}
     - onlyif: test -L /etc/apache2/mods-enabled/{{ v.name|default(k) }}.load
     {% endif %}
+    - watch_in:
+      - service: httpd
+
+    {% if v.config is defined %}
+modconfig_{{ k }}:
+  file:
+    - managed
+    - name: {{ datamap.mods.dir }}/{{ k }}.conf
+    - source: salt://httpd/files/modconfig
+    - user: root
+    - group: root
+    - mode: 644
+    - template: jinja
+    - context:
+        alias: {{ k }}
+    - watch_in:
+      - service: httpd
+    {% endif %}
+
   {% endif %}
 {% endfor %}
 
@@ -86,7 +100,7 @@ vhost_{{ k }}:
     - name: {{ v.path|default(datamap.vhosts.dir ~ '/' ~ datamap.vhosts.name_prefix|default('') ~ v_name ~ datamap.vhosts.name_suffix|default('')) }}
     - user: root
     - group: root
-    - mode: 640
-    - contents_pillar: httpd:vhosts:{{ v_name }}:content
+    - mode: 600
+    - contents_pillar: httpd:vhosts:{{ v_name }}:plain
 
 {% endfor %}
