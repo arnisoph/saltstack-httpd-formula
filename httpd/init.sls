@@ -37,6 +37,8 @@ manage_modpkg_{{ k }}:
 {% for p in v.pkgs %}
       - {{ p }}
 {% endfor %}
+    - require_in:
+      - cmd: manage_mod_{{ k }}
     {% endif %}
 
 manage_mod_{{ k }}:
