@@ -45,14 +45,14 @@ httpd:
     sunstone:
       plain: |
         <VirtualHost *:80>
-          ServerName sunstone-server
-          DocumentRoot /usr/lib/one/sunstone/public
+            ServerName sunstone-server
+            DocumentRoot /usr/lib/one/sunstone/public
 
-          PassengerUser oneadmin
-          PassengerMaxInstancesPerApp 1
+            PassengerUser oneadmin
+            PassengerMaxInstancesPerApp 1
 
-          <Directory /usr/lib/one/sunstone/public>
-             AllowOverride all
-             Options -MultiViews
-          </Directory>
+            <Directory /usr/lib/one/sunstone/public>
+                AllowOverride all
+                Options -MultiViews
+            </Directory>
         </VirtualHost>
