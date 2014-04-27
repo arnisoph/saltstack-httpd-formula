@@ -56,3 +56,22 @@ httpd:
                 Options -MultiViews
             </Directory>
         </VirtualHost>
+        <VirtualHost *:443>
+            ServerName sunstone-server
+            DocumentRoot /usr/lib/one/sunstone/public
+
+            PassengerUser oneadmin
+            PassengerMaxInstancesPerApp 1
+
+            <Directory /usr/lib/one/sunstone/public>
+                AllowOverride all
+                Options -MultiViews
+            </Directory>
+
+            SSLEngine on
+            SSLCertificateFile      /etc/ssl/certs/cert.pem
+            SSLCertificateKeyFile   /etc/ssl/private/key.key
+            SSLCertificateChainFile /etc/ssl/certs/ca.pem
+
+            Header always set Strict-Transport-Security "max-age=31556926"
+        </VirtualHost>
