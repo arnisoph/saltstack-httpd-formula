@@ -1,6 +1,18 @@
 {% from "httpd/defaults.yaml" import rawmap with context %}
 {% set datamap = salt['grains.filter_by'](rawmap, merge=salt['pillar.get']('httpd:lookup')) %}
 
+include:
+{% for si in salt['pillar.get']('httpd:lookup:sls_include', '[]') %}
+  - {{ si }}
+{% endfor %}
+
+extend: {{ salt['pillar.get']('httpd:lookup:sls_extend', '{}') }}
+{#
+{-% for k, v in salt['pillar.get']('httpd:lookup:sls_extend', {}).items() }-}
+  {-{ k }-}: {-{ v }-}
+{-% endfor }-}
+#}
+
 httpd:
   pkg:
     - installed
@@ -102,5 +114,4 @@ vhost_{{ k }}:
     - group: root
     - mode: 600
     - contents_pillar: httpd:vhosts:{{ v_name }}:plain
-
 {% endfor %}
