@@ -1,10 +1,20 @@
 {% from "httpd/defaults.yaml" import rawmap with context %}
 {% set datamap = salt['grains.filter_by'](rawmap, merge=salt['pillar.get']('httpd:lookup')) %}
 
-include:
-{% for si in salt['pillar.get']('httpd:lookup:sls_include', '[]') %}
+{% set includes = salt['pillar.get']('httpd:lookup:sls_include', []) %}
+{% if includes|length > 0 %}
+Include:
+  {% for si in includes %}
   - {{ si }}
-{% endfor %}
+  {% endfor %}
+{% endif %}
+
+{# TODO: use this as soon we have the first, useful include here
+#include:
+#{% for si in salt['pillar.get']('httpd:lookup:sls_include', '[]') %}
+#  - {{ si }}
+#{% endfor %}
+#}
 
 extend: {{ salt['pillar.get']('httpd:lookup:sls_extend', '{}') }}
 {#
