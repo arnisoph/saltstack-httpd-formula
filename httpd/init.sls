@@ -3,7 +3,7 @@
 
 {% set includes = salt['pillar.get']('httpd:lookup:sls_include', []) %}
 {% if includes|length > 0 %}
-Include:
+include:
   {% for si in includes %}
   - {{ si }}
   {% endfor %}
