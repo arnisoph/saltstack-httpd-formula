@@ -26,17 +26,14 @@ extend: {{ salt['pillar.get']('httpd:lookup:sls_extend', '{}') }}
 httpd:
   pkg:
     - installed
-    - pkgs:
-{% for p in datamap.pkgs %}
-      - {{ p }}
-{% endfor %}
+    - pkgs: {{ datamap.pkgs }}
   service:
     - {{ datamap.service.state|default('running') }}
     - name: {{ datamap.service.name }}
     - enable: {{ datamap.service.enable|default(True) }}
     - watch:
       - pkg: httpd #TODO remove
-{% for k, v in salt['pillar.get']('httpd:vhosts').items() %}
+{% for k, v in salt['pillar.get']('httpd:vhosts', {}).items() %}
       - file: vhost_{{ k }}
       - cmd: manage_site_{{ k }}
 {% endfor %}
@@ -50,10 +47,7 @@ httpd:
 manage_modpkg_{{ k }}:
   pkg:
     - installed
-    - pkgs:
-{% for p in v.pkgs %}
-      - {{ p }}
-{% endfor %}
+    - pkgs: {{ v.pkgs }}
     - require_in:
       - cmd: manage_mod_{{ k }}
     {% endif %}
@@ -93,7 +87,7 @@ modconfig_{{ k }}:
   {% endif %}
 {% endfor %}
 
-{% for k, v in salt['pillar.get']('httpd:vhosts').items() %}
+{% for k, v in salt['pillar.get']('httpd:vhosts', {}).items() %}
   {% if v.ensure is not defined or v.ensure in ['managed'] %}
     {% set f_fun = 'managed' %}
   {% elif v.ensure in ['absent'] %}
