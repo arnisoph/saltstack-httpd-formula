@@ -154,16 +154,16 @@ httpd:
           <IfModule mod_proxy_http.c>
             ProxyRequests Off
             ProxyPreserveHost On
-            Include /omd/sites/prod/etc/apache/proxy-port.conf
+            Include /omd/sites/mysitenamehere/etc/apache/proxy-port.conf
           </IfModule>
 
-          <Location /prod>
+          <Location /mysitenamehere>
             ErrorDocument 503 "Error 503, site not started?"
             SSLRequireSSL
             Header always set Strict-Transport-Security "max-age=31556926;includeSubdomains"
 
-            SetEnv OMD_SITE prod
-            SetEnv OMD_ROOT /omd/sites/prod
+            SetEnv OMD_SITE mysitenamehere
+            SetEnv OMD_ROOT /omd/sites/mysitenamehere
             SetEnv OMD_MODE own
           </Location>
         </VirtualHost>
