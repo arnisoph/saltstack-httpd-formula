@@ -1,27 +1,10 @@
+#!jinja|yaml
+
 {% from "httpd/defaults.yaml" import rawmap with context %}
 {% set datamap = salt['grains.filter_by'](rawmap, merge=salt['pillar.get']('httpd:lookup')) %}
 
-{% set includes = salt['pillar.get']('httpd:lookup:sls_include', []) %}
-{% if includes|length > 0 %}
-include:
-  {% for si in includes %}
-  - {{ si }}
-  {% endfor %}
-{% endif %}
-
-{# TODO: use this as soon we have the first, useful include here
-#include:
-#{% for si in salt['pillar.get']('httpd:lookup:sls_include', '[]') %}
-#  - {{ si }}
-#{% endfor %}
-#}
-
+include: {{ salt['pillar.get']('httpd:lookup:sls_include', []) }}
 extend: {{ salt['pillar.get']('httpd:lookup:sls_extend', '{}') }}
-{#
-{-% for k, v in salt['pillar.get']('httpd:lookup:sls_extend', {}).items() }-}
-  {-{ k }-}: {-{ v }-}
-{-% endfor }-}
-#}
 
 httpd:
   pkg:
@@ -31,14 +14,21 @@ httpd:
     - {{ datamap.service.state|default('running') }}
     - name: {{ datamap.service.name }}
     - enable: {{ datamap.service.enable|default(True) }}
-    - watch:
-      - pkg: httpd #TODO remove
-{% for k, v in salt['pillar.get']('httpd:vhosts', {}).items() %}
-      - file: vhost_{{ k }}
-      - cmd: manage_site_{{ k }}
+
+{% for f in datamap.config.manage|default([]) %}
+  {% set c = datamap.config[f]|default({}) %}
+httpd_config_{{ f }}:
+  file:
+    - {{ c.ensure|default('managed') }}
+    - name: {{ c.path }}
+    - source: {{ c.template_path|default('salt://httpd/files/' ~ f) }}
+    - user: {{ c.user|default('root') }}
+    - group: {{ c.group|default('root') }}
+    - mode: {{ c.mode|default(640) }}
+    - template: jinja
+    - watch_in:
+      - service: httpd
 {% endfor %}
-
-
 
 {% for k, v in datamap.mods.modules.items() %}
   {% if v.manage|default(False) %}
@@ -88,27 +78,13 @@ modconfig_{{ k }}:
 {% endfor %}
 
 {% for k, v in salt['pillar.get']('httpd:vhosts', {}).items() %}
-  {% if v.ensure is not defined or v.ensure in ['managed'] %}
+  {% if v.ensure|default('managed') in ['managed'] %}
     {% set f_fun = 'managed' %}
-  {% elif v.ensure in ['absent'] %}
+  {% elif v.ensure|default('managed') in ['absent'] %}
     {% set f_fun = 'absent' %}
   {% endif %}
 
   {% set v_name = v.name|default(k) %}
-
-manage_site_{{ k }}:
-  cmd:
-    - run
-    {% if f_fun in ['managed'] %}
-    - name: {{ datamap.a2ensite.path}} {{ v_name }}
-    {% else %}
-    - name: {{ datamap.a2dissite.path}} {{ v_name }}
-    {% endif %}
-    {% if f_fun in ['managed'] %}
-    - unless: test -L /etc/apache2/sites-enabled/{{ v.linkname|default(v_name) }}
-    {% else %}
-    - onlyif: test -L /etc/apache2/sites-enabled/{{ v.linkname|default(v_name) }}
-    {% endif %}
 
 vhost_{{ k }}:
   file:
@@ -118,4 +94,35 @@ vhost_{{ k }}:
     - group: root
     - mode: 600
     - contents_pillar: httpd:vhosts:{{ v_name }}:plain
+    - watch_in:
+      - service: httpd
+
+manage_site_{{ k }}:
+  cmd:
+    - run
+    {% if f_fun in ['managed'] %}
+    - name: {{ datamap.a2ensite.path}} {{ v_name }}
+    - unless: test -L /etc/apache2/sites-enabled/{{ v.linkname|default(v_name) }}
+    {% else %}
+    - name: {{ datamap.a2dissite.path}} {{ v_name }}
+    - onlyif: test -L /etc/apache2/sites-enabled/{{ v.linkname|default(v_name) }}
+    {% endif %}
+    - watch_in:
+      - service: httpd
+{% endfor %}
+
+{% for f in datamap.default_documents|default([]) %}
+default_doc_{{ f }}:
+  file:
+    - absent
+    - name: {{ f }}
+{% endfor %}
+
+{% for f in salt['pillar.get']('httpd:configs_absent', []) %}
+configfile_absent_{{ f }}:
+  file:
+    - absent
+    - name: {{ f }}
+    - watch_in:
+      - service: httpd
 {% endfor %}

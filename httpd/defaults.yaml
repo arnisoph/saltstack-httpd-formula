@@ -4,6 +4,11 @@ Debian:
     - apache2
   service:
     name: apache2
+  config:
+    manage:
+      - main
+    main:
+      path: /etc/apache2/apache2.conf
   vhosts:
     dir: /etc/apache2/sites-available
   a2enmod:
@@ -14,6 +19,8 @@ Debian:
     path: /usr/sbin/a2ensite
   a2dissite:
     path: /usr/sbin/a2dissite
+  default_documents:
+    - /var/www/index.html
   mods:
     dir: /etc/apache2/mods-available
     modules:
@@ -29,9 +36,6 @@ Debian:
         pkgs: []
       headers:
         pkgs: []
-      fcgid:
-        pkgs:
-          - libapache2-mod-fcgid
       rewrite:
         pkgs: []
       alias:
@@ -49,6 +53,12 @@ Debian:
       status:
         pkgs: []
       autoindex:
+        pkgs: []
+      actions:
+        pkgs: []
+      include:
+        pkgs: []
+      cgid:
         pkgs: []
       php5:
         pkgs:
