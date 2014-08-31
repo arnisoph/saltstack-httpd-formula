@@ -30,36 +30,21 @@ Debian:
       passenger:
         pkgs:
           - libapache2-mod-passenger
-      suexec:
-        pkgs: []
-      expires:
-        pkgs: []
-      headers:
-        pkgs: []
-      rewrite:
-        pkgs: []
-      alias:
-        pkgs: []
-      deflate:
-        pkgs: []
-      ssl:
-        pkgs: []
-      proxy:
-        pkgs: []
-      proxy_http:
-        pkgs: []
-      userdir:
-        pkgs: []
-      status:
-        pkgs: []
-      autoindex:
-        pkgs: []
-      actions:
-        pkgs: []
-      include:
-        pkgs: []
-      cgid:
-        pkgs: []
+      suexec: {}
+      expires: {}
+      headers: {}
+      rewrite: {}
+      alias: {}
+      deflate: {}
+      ssl: {}
+      proxy: {}
+      proxy_http: {}
+      userdir: {}
+      status: {}
+      autoindex: {}
+      actions: {}
+      include: {}
+      cgid: {}
       php5:
         pkgs:
           - libapache2-mod-php5

@@ -3,8 +3,8 @@
 {% from "httpd/defaults.yaml" import rawmap with context %}
 {% set datamap = salt['grains.filter_by'](rawmap, merge=salt['pillar.get']('httpd:lookup')) %}
 
-include: {{ salt['pillar.get']('httpd:lookup:sls_include', []) }}
-extend: {{ salt['pillar.get']('httpd:lookup:sls_extend', '{}') }}
+include: {{ datamap.sls_include|default([]) }}
+extend: {{ datamap.sls_extend|default({}) }}
 
 httpd:
   pkg:
@@ -30,10 +30,10 @@ httpd_config_{{ f }}:
       - service: httpd
 {% endfor %}
 
-{% for k, v in datamap.mods.modules.items() %}
+{% for k, v in datamap.mods.modules|dictsort %}
   {% if v.manage|default(False) %}
 
-    {% if v.pkgs|length > 0 %}
+    {% if 'pkgs' in v %}
 manage_modpkg_{{ k }}:
   pkg:
     - installed
@@ -77,7 +77,7 @@ modconfig_{{ k }}:
   {% endif %}
 {% endfor %}
 
-{% for k, v in salt['pillar.get']('httpd:vhosts', {}).items() %}
+{% for k, v in salt['pillar.get']('httpd:vhosts', {})|dictsort %}
   {% if v.ensure|default('managed') in ['managed'] %}
     {% set f_fun = 'managed' %}
   {% elif v.ensure|default('managed') in ['absent'] %}
