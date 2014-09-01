@@ -1,23 +1,23 @@
 <VirtualHost *:80 [::]:80>
     ServerName {{ servername }}
 
-    DocumentRoot "{{ webroot }}{{ docroot|default('/htdocs/webroot') }}"
+    DocumentRoot "{{ siteroot }}{{ webroot|default('/htdocs') }}{{ docroot|default('/webroot') }}"
 
-    <Directory "{{ webroot }}{{ docroot|default('/htdocs/webroot') }}">
+    <Directory "{{ siteroot }}{{ webroot|default('/htdocs') }}{{ docroot|default('/webroot') }}">
         Options SymLinksIfOwnerMatch MultiViews
         AllowOverride AuthConfig FileInfo Indexes Limit Options=Indexes,MultiViews,FollowSymLinks,SymLinksIfOwnerMatch
         Order allow,deny
         allow from all
     </Directory>
 
-    <Directory "{{ webroot }}{{ cgiroot|default('/htdocs/cgi-bin') }}">
+    <Directory "{{ siteroot }}{{ webroot|default('/htdocs') }}{{ cgiroot|default('/cgi-bin') }}">
         Order allow,deny
         deny from all
     </Directory>
 
     <IfModule mod_env.c>
-        SetEnv TMP "{{ webroot }}{{ tmproot }}"
-        SetEnv TMPDIR "{{ webroot }}{{ tmproot }}"
+        SetEnv TMP "{{ siteroot }}{{ tmproot|default('/tmp') }}"
+        SetEnv TMPDIR "{{ siteroot }}{{ tmproot|default('/tmp') }}"
     </IfModule>
 
     <IfModule mod_fcgid.c>
@@ -31,15 +31,15 @@
             </FilesMatch>
         </IfModule>
         <IfModule mod_suexec.c>
-            SuexecUserGroup {{ suexec.user }} {{ suexec.group }}
+            SuexecUserGroup {{ suexec.user|default(id) }} {{ suexec.group|default(id) }}
         </IfModule>
 
         <FilesMatch "\.php5?$">
             Options +ExecCGI
             SetHandler fcgid-script
         </FilesMatch>
-        FcgidWrapper {{ webroot }}/conf/{{ phpversion|default('php53') }}/php-fcgi-starter .php
-        FcgidWrapper {{ webroot }}/conf/{{ phpversion|default('php53') }}/php-fcgi-starter .php5
+        FcgidWrapper {{ siteroot }}/conf/{{ phpversion|default('php53') }}/php-fcgi-starter .php
+        FcgidWrapper {{ siteroot }}/conf/{{ phpversion|default('php53') }}/php-fcgi-starter .php5
     </IfModule>
 
     <IfModule mod_rewrite.c>

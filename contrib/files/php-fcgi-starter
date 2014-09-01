@@ -1,0 +1,6 @@
+#!/bin/sh
+umask 022
+export PHPRC='{{ siteroot }}{{ fcgistarterroot|default('/conf')  }}/{{ phpversion }}'
+export PHP_FCGI_CHILDREN=0
+export PHP_FCGI_MAX_REQUESTS=250
+exec /usr/bin/{{ phpversion }}/php-cgi -c '{{ siteroot }}{{ fcgistarterroot|default('/conf')  }}/{{ phpversion }}/'

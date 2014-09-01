@@ -77,14 +77,19 @@ httpd:
         </VirtualHost>
     myvhost:
       template_path: 'salt://httpd/files/customvhosttemplate'
+      site_setup: True
       context:
         servername: my.domain.de
         webroot: /var/www/myvhost
-        tmproot: /tmp
         proxyport: 9007
-        suexec:
-          user: myvhost
-          group: myvhost
+        phpversions:
+          php53:
+            manage: True
+      tmproot: {'user': 'myvhost', 'group': 'www-data'}
+      webroot: {'user': 'myvhost', 'group': 'www-data'}
+      logroot: {'user': 'www-data', 'group': 'myvhost'}
+      fcgistarterroot: {'user': 'www-data', 'group': 'myvhost'}
+      fcgistarterscript: {'template_path': 'salt://httpd/files/php-fcgi-starter'}
 
 
 {# Open Monitoring Distribution (OMD) HTTP vhost setup #}

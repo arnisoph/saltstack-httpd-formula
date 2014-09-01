@@ -3,7 +3,7 @@
 {% from "httpd/defaults.yaml" import rawmap with context %}
 {% set datamap = salt['grains.filter_by'](rawmap, merge=salt['pillar.get']('httpd:lookup')) %}
 
-include: {{ datamap.sls_include|default([]) }}
+include: {{ datamap.sls_include|default(['httpd._site_setup']) }}
 extend: {{ datamap.sls_extend|default({}) }}
 
 httpd:
@@ -84,20 +84,21 @@ modconfig_{{ k }}:
     {% set f_fun = 'absent' %}
   {% endif %}
 
-  {% set v_name = v.name|default(k) %}
+  {% set id = v.name|default(k) %}
 
 vhost_{{ k }}:
   file:
     - {{ f_fun }}
-    - name: {{ v.path|default(datamap.vhosts.dir ~ '/' ~ datamap.vhosts.name_prefix|default('') ~ v_name ~ datamap.vhosts.name_suffix|default('')) }}
+    - name: {{ v.path|default(datamap.vhosts.dir ~ '/' ~ datamap.vhosts.name_prefix|default('') ~ id ~ datamap.vhosts.name_suffix|default('')) }}
   {% if 'template_path' in v %}
     - source: {{ v.template_path }}
     - template: jinja
     - defaults:
       id: {{ k }}
+      suexec: {}
     - context: {{ v.context|default({}) }}
   {% else %}
-    - contents_pillar: httpd:vhosts:{{ v_name }}:plain
+    - contents_pillar: httpd:vhosts:{{ id }}:plain
   {% endif %}
     - user: root
     - group: root
@@ -109,11 +110,11 @@ manage_site_{{ k }}:
   cmd:
     - run
     {% if f_fun in ['managed'] %}
-    - name: {{ datamap.a2ensite.path}} {{ v_name }}
-    - unless: test -L /etc/apache2/sites-enabled/{{ v.linkname|default(v_name) }}
+    - name: {{ datamap.a2ensite.path}} {{ id }}
+    - unless: test -L /etc/apache2/sites-enabled/{{ v.linkname|default(id) }}
     {% else %}
-    - name: {{ datamap.a2dissite.path}} {{ v_name }}
-    - onlyif: test -L /etc/apache2/sites-enabled/{{ v.linkname|default(v_name) }}
+    - name: {{ datamap.a2dissite.path}} {{ id }}
+    - onlyif: test -L /etc/apache2/sites-enabled/{{ v.linkname|default(id) }}
     {% endif %}
     - require:
       - file: vhost_{{ k }}

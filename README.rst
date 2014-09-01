@@ -12,12 +12,8 @@ NOTICE BEFORE YOU USE
 TODO
 ====
 
-* make the formula powerful
-* make the formula handy
-* support WSGI hosting
-* support Passenger hosting
-* support SSL/ TLS
 * support load balancing
+* manage htpasswd files
 
 Instructions
 ============
