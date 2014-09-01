@@ -167,3 +167,13 @@ httpd:
             SetEnv OMD_MODE own
           </Location>
         </VirtualHost>
+    myvhost:
+      template_path: 'salt://httpd/files/customvhosttemplate'
+      context:
+        servername: my.domain.de
+        webroot: /var/www/myvhost
+        tmproot: /tmp
+        proxyport: 9007
+        suexec:
+          user: myvhost
+          group: myvhost

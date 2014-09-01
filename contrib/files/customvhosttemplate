@@ -1,0 +1,57 @@
+<VirtualHost *:80 [::]:80>
+    ServerName {{ servername }}
+
+    DocumentRoot "{{ webroot }}{{ docroot|default('/htdocs/webroot') }}"
+
+    <Directory "{{ webroot }}{{ docroot|default('/htdocs/webroot') }}">
+        Options SymLinksIfOwnerMatch MultiViews
+        AllowOverride AuthConfig FileInfo Indexes Limit Options=Indexes,MultiViews,FollowSymLinks,SymLinksIfOwnerMatch
+        Order allow,deny
+        allow from all
+    </Directory>
+
+    <Directory "{{ webroot }}{{ cgiroot|default('/htdocs/cgi-bin') }}">
+        Order allow,deny
+        deny from all
+    </Directory>
+
+    <IfModule mod_env.c>
+        SetEnv TMP "{{ webroot }}{{ tmproot }}"
+        SetEnv TMPDIR "{{ webroot }}{{ tmproot }}"
+    </IfModule>
+
+    <IfModule mod_fcgid.c>
+        <IfModule mod_php5.c>
+            php_admin_flag engine off
+            <FilesMatch "\.ph(p3?|tml)$">
+                SetHandler None
+            </FilesMatch>
+            <FilesMatch ".+\.ph(p[345]?|t|tml)$">
+                SetHandler None
+            </FilesMatch>
+        </IfModule>
+        <IfModule mod_suexec.c>
+            SuexecUserGroup {{ suexec.user }} {{ suexec.group }}
+        </IfModule>
+
+        <FilesMatch "\.php5?$">
+            Options +ExecCGI
+            SetHandler fcgid-script
+        </FilesMatch>
+        FcgidWrapper {{ webroot }}/conf/{{ phpversion|default('php53') }}/php-fcgi-starter .php
+        FcgidWrapper {{ webroot }}/conf/{{ phpversion|default('php53') }}/php-fcgi-starter .php5
+    </IfModule>
+
+    <IfModule mod_rewrite.c>
+        RewriteEngine On
+    </IfModule>
+
+    <IfModule mod_proxy.c>
+        ProxyPreserveHost On
+        ProxyPass /p http://127.0.0.1:{{ proxyport }}/
+        ProxyPassReverse /p http://127.0.0.1:{{ proxyport }}/
+    </IfModule>
+
+    CustomLog "/var/log/apache2/{{ id }}_access.log" combined
+
+</VirtualHost>

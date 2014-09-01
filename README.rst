@@ -12,11 +12,8 @@ NOTICE BEFORE YOU USE
 TODO
 ====
 
-* make the formula flexible
 * make the formula powerful
 * make the formula handy
-* make the formula easy to understand
-* support PHP hosting
 * support WSGI hosting
 * support Passenger hosting
 * support SSL/ TLS

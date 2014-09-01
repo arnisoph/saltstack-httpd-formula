@@ -90,10 +90,18 @@ vhost_{{ k }}:
   file:
     - {{ f_fun }}
     - name: {{ v.path|default(datamap.vhosts.dir ~ '/' ~ datamap.vhosts.name_prefix|default('') ~ v_name ~ datamap.vhosts.name_suffix|default('')) }}
+  {% if 'template_path' in v %}
+    - source: {{ v.template_path }}
+    - template: jinja
+    - defaults:
+      id: {{ k }}
+    - context: {{ v.context|default({}) }}
+  {% else %}
+    - contents_pillar: httpd:vhosts:{{ v_name }}:plain
+  {% endif %}
     - user: root
     - group: root
     - mode: 600
-    - contents_pillar: httpd:vhosts:{{ v_name }}:plain
     - watch_in:
       - service: httpd
 
@@ -107,6 +115,8 @@ manage_site_{{ k }}:
     - name: {{ datamap.a2dissite.path}} {{ v_name }}
     - onlyif: test -L /etc/apache2/sites-enabled/{{ v.linkname|default(v_name) }}
     {% endif %}
+    - require:
+      - file: vhost_{{ k }}
     - watch_in:
       - service: httpd
 {% endfor %}
