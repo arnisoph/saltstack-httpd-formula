@@ -1,3 +1,3 @@
 <IfModule mod_{{ alias }}.c>
-{{ salt['pillar.get']('httpd:lookup:mods:modules:' ~ alias ~ ':config:plain', '') -}}
+{{ salt['pillar.get']('httpd:lookup:mods:modules:' ~ alias ~ ':config:contents', '') -}}
 </IfModule>

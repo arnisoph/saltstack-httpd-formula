@@ -17,6 +17,7 @@ TODO
 
 * support load balancing
 * manage htpasswd files
+* chattr php.ini/ fcgi starter script?
 
 Instructions
 ============
@@ -35,7 +36,15 @@ Available states
 
 ``httpd``
 ---------
-Install and start httpd server
+Setup httpd, configure vhosts and manage sites
+
+``httpd.setup``
+---------------
+General server setup
+
+``httpd.vhosts``
+----------------
+Manage vhosts
 
 Additional resources
 ====================
@@ -62,7 +71,8 @@ Salt Compatibility
 
 Tested with:
 
-* 2014.1.x
+* 2014.1
+* 2014.7
 
 OS Compatibility
 ================

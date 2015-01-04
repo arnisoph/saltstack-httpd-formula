@@ -7,7 +7,7 @@ httpd:
         ssl:
           manage: True
           config:
-            plain: |
+            contents: |
               SSLRandomSeed startup builtin
               SSLRandomSeed startup file:/dev/urandom 512
               SSLRandomSeed connect builtin
@@ -43,7 +43,7 @@ httpd:
       name: default-ssl
       ensure: absent
     sunstone:
-      plain: |
+      contents: |
         <VirtualHost *:80>
             ServerName sunstone-server
             DocumentRoot /usr/lib/one/sunstone/public
@@ -104,7 +104,7 @@ httpd:
         ssl:
           manage: True
           config:
-            plain: |
+            contents: |
               SSLRandomSeed startup builtin
               SSLRandomSeed startup file:/dev/urandom 512
               SSLRandomSeed connect builtin
@@ -145,14 +145,14 @@ httpd:
       name: default-ssl
       ensure: absent
     omd:
-      plain: |
+      contents: |
         <VirtualHost *:80>
           RewriteEngine On
           RewriteCond %{HTTPS} !=on
           RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
         </VirtualHost>
     omd_ssl:
-      plain: |
+      contents: |
         <VirtualHost *:443>
           SSLEngine on
           SSLCertificateFile /etc/ssl/certs/my.domain.local.crt.pem
