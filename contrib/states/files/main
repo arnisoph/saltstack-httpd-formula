@@ -53,6 +53,8 @@ ServerTokens ProductOnly
 ServerSignature Off
 TraceEnable Off
 HostnameLookups Off
+CustomLog ${APACHE_LOG_DIR}/other_vhosts_access.log vhost_combined
+
 
 ErrorLog ${APACHE_LOG_DIR}/error.log
 
