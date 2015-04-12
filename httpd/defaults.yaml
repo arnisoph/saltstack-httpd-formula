@@ -38,6 +38,7 @@ Debian:
       deflate: {}
       ssl: {}
       proxy: {}
+      proxy_ajp: {}
       proxy_http: {}
       userdir: {}
       status: {}
