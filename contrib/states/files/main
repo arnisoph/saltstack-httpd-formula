@@ -49,6 +49,9 @@ AccessFileName .htaccess
 DefaultType None
 
 
+ServerTokens ProductOnly
+ServerSignature Off
+TraceEnable Off
 HostnameLookups Off
 
 ErrorLog ${APACHE_LOG_DIR}/error.log
